@@ -28,10 +28,12 @@ def index():
         if not articles:
             return "No articles found", 400
             
-        ner_results = nlp_service.process_articles(articles)
+        ner_results = nlp_service.process_articles_ner(articles)
+        sentiment_results = nlp_service.process_articles_sentiment(articles)
+        sentiment_summary = nlp_service.create_sentiment_summary(sentiment_results)
         graph_html = kg_service.create_knowledge(ner_results)
         
-        return render_template('index.html', graph_html=graph_html)
+        return render_template('index.html', graph_html=graph_html, sentiment_summary=sentiment_summary)
         
     except Exception as e:
         return f"An error occurred: {str(e)}", 500

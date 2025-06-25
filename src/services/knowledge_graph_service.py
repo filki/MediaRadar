@@ -56,5 +56,6 @@ class KnowledgeGraphService:
             nazwy_w_artykule = [ent['word'] for ent in ent_list]
             for i, j in combinations(nazwy_w_artykule, 2):
                 net.add_edge(i, j)
-        
+        net = net.generate_html()
+
         return net

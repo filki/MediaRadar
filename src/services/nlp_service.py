@@ -1,4 +1,4 @@
-from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassification
+from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassification,AutoModelForSequenceClassification
 from typing import List, Dict, Any
 import logging
 
@@ -13,7 +13,7 @@ class NLPService:
         
         logger.info('Initializing sentiment service...')
         self.sentiment_tokenizer = AutoTokenizer.from_pretrained("siebert/sentiment-roberta-large-english")
-        self.sentiment_model = AutoModelForTokenClassification.from_pretrained("siebert/sentiment-roberta-large-english")
+        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained("siebert/sentiment-roberta-large-english")
         self.sentiment_pipeline = self._create_sentiment_pipeline()
 
 
@@ -26,7 +26,7 @@ class NLPService:
             aggregation_strategy="simple"
         )
     
-    def create_sentiment_pipeline(self):
+    def _create_sentiment_pipeline(self):
         return pipeline(
             'sentiment-analysis',
             model = self.sentiment_model,
@@ -83,6 +83,12 @@ class NLPService:
             except Exception as e:
                 logger.error(f"Error processing article: {str(e)}")
                 continue
-        
-        return results_sentiment
-   
+            return results_sentiment
+    def create_sentiment_summary(self, results_sentiment:list):
+        total_articles = len(results_sentiment)
+        pos_art = sum(1 for art in results_sentiment if art['sentiment'] == 'POSITIVE')
+        neg_art = sum(1 for art in results_sentiment if art['sentiment'] == 'NEGATIVE')
+        perct_pos = pos_art/total_articles
+        perct_neg = neg_art/total_articles
+        summary = {"Positive %" : perct_pos, "Negative %" : perct_neg}
+        return summary

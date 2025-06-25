@@ -114,6 +114,7 @@
         <div id="graph-container">
             {% if graph_html %}
                 {{ graph_html | safe }}
+                {{ sentiment_summary }}
             {% else %}
                 <p class="placeholder-text">Graf pojawi się tutaj po wygenerowaniu.</p>
             {% endif %}
