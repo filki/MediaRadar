@@ -1,6 +1,6 @@
 # News Radar
 
-![Version](https://img.shields.io/badge/version-0.1.1-blue)
+![Version](https://img.shields.io/badge/version-0.1.3-blue)
 
 A web application that analyzes news articles and visualizes relationships between entities (people, organizations, locations) using Natural Language Processing.
 
@@ -9,6 +9,8 @@ A web application that analyzes news articles and visualizes relationships betwe
 - Fetches latest news articles
 - Extracts named entities using BERT NER model
 - Visualizes relationships between entities in an interactive graph
+- Performs sentiment analysis on news articles
+- Displays sentiment summary and distribution
 - Clean, responsive web interface
 
 ## Prerequisites
@@ -16,8 +18,9 @@ A web application that analyzes news articles and visualizes relationships betwe
 - Python 3.8+
 - pip
 - Git
+- GNews API key (free tier available)
 
-## Installation
+## 🚀 Installation
 
 1. Clone the repository:
    ```bash
