@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Radar Mediów - analiza i wizualizacja powiązań w wiadomościach">
+    <title>Radar Mediów</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 2em;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+        
+        p {
+            color: #34495e;
+            margin-bottom: 1.5em;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        #graph-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-top: 2em;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+        }
+        
+        .placeholder-text {
+            text-align: center;
+            padding: 2em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1em;
+            }
+            
+            .container {
+                padding: 1.5em;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Radar Mediów i Analizy Narracji</h1>
+        <p>Kliknij przycisk poniżej, aby wygenerować graf powiązań na podstawie najnowszych nagłówków wiadomości.</p>
+
+        <form action="/" method="post">
+            <button type="submit" class="btn" aria-label="Generuj graf powiązań">Generuj Graf</button>
+        </form>
+
+        <div id="graph-container">
+            {% if graf_html %}
+                {{ graf_html | safe }}
+            {% else %}
+                <p class="placeholder-text">Graf pojawi się tutaj po wygenerowaniu.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
