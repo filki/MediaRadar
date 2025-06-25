@@ -84,6 +84,15 @@
                 font-size: 1.8em;
             }
         }
+        
+        .error-message {
+            color: #dc3545;
+            padding: 1em;
+            margin: 1em 0;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            background-color: #f8d7da;
+        }
     </style>
 </head>
 
@@ -92,13 +101,19 @@
         <h1>Radar Mediów i Analizy Narracji</h1>
         <p>Kliknij przycisk poniżej, aby wygenerować graf powiązań na podstawie najnowszych nagłówków wiadomości.</p>
 
-        <form action="/" method="post">
+        <form method="POST" action="/">
             <button type="submit" class="btn" aria-label="Generuj graf powiązań">Generuj Graf</button>
         </form>
 
+        {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% endif %}
+
         <div id="graph-container">
-            {% if graf_html %}
-                {{ graf_html | safe }}
+            {% if graph_html %}
+                {{ graph_html | safe }}
             {% else %}
                 <p class="placeholder-text">Graf pojawi się tutaj po wygenerowaniu.</p>
             {% endif %}
