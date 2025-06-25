@@ -1,5 +1,7 @@
 # News Radar
 
+![Version](https://img.shields.io/badge/version-0.1.1-blue)
+
 A web application that analyzes news articles and visualizes relationships between entities (people, organizations, locations) using Natural Language Processing.
 
 ## Features
@@ -65,6 +67,16 @@ A web application that analyzes news articles and visualizes relationships betwe
   - `index.html` - Main application interface
 - `requirements.txt` - Python dependencies
 - `.gitignore` - Specifies intentionally untracked files to ignore
+
+## Release Notes
+
+### v0.1.1 - Initial Alpha
+- Basic news article fetching from GNews API
+- Named Entity Recognition using BERT model
+- Interactive knowledge graph visualization
+- Simple web interface
+
+> **Note**: This is a pre-release version for testing purposes only
 
 ## License
 
