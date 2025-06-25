@@ -31,28 +31,30 @@ class KnowledgeGraphService:
 
     def create_knowledge(self, knowledge_graph_list: list):
         """Tworzy graf wiedzy na podstawie listy encji."""
+
+        
         net = Network(
             height="750px",
             width="100%",
-            notebook=False,
+            notebook=True,
             cdn_resources="remote"
         )
-        
+       
         # Zbierz wszystkie encje (z duplikatami)
-        wszystkie_encje = []
+        wszystkie_encje_z_duplikatami = []
         for ent_list in knowledge_graph_list:
             for ent in ent_list:
-                wszystkie_encje.append(ent['word'])
+                wszystkie_encje_z_duplikatami.append(ent['word'])
         
         # Utwórz węzły dla unikalnych encji
-        for ent in set(wszystkie_encje):
-            net.add_node(ent, title=ent)
+        unikalne_encje = set(wszystkie_encje_z_duplikatami)
+        for ent in unikalne_encje:
+            net.add_node(ent)
         
         # Dodaj krawędzie między encjami występującymi w tym samym artykule
         for ent_list in knowledge_graph_list:
-            entities = [ent['word'] for ent in ent_list]
-            for i, j in combinations(entities, 2):
+            nazwy_w_artykule = [ent['word'] for ent in ent_list]
+            for i, j in combinations(nazwy_w_artykule, 2):
                 net.add_edge(i, j)
         
-        # Wygeneruj i zwróć HTML
-        return net.generate_html(name='graph.html', local=True, notebook=False)
+        return net
