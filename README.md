@@ -70,17 +70,6 @@ A web application that analyzes news articles and visualizes relationships betwe
   - `index.html` - Main application interface
 - `requirements.txt` - Python dependencies
 - `.gitignore` - Specifies intentionally untracked files to ignore
-
-## Release Notes
-
-### v0.1.1 - Initial Alpha
-- Basic news article fetching from GNews API
-- Named Entity Recognition using BERT model
-- Interactive knowledge graph visualization
-- Simple web interface
-
-> **Note**: This is a pre-release version for testing purposes only
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
