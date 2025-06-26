@@ -7,32 +7,12 @@ logger = logging.getLogger(__name__)
 class KnowledgeGraphService:
     def __init__(self):
         pass
-    
-    def create_knowledge_graph_lists(self, ner_result):
-        """Sortuje encje z wyniku NER do osobnych list."""
-        if not ner_result:
-            return {"osoby": [], "miejsca": [], "organizacje": []}
 
-        osoby = []
-        miejsca = []
-        organizacje = []
-
-        for entity in ner_result:
-            # Przywracamy logikę dopasowania do wyników z modelu BERT
-            match entity:
-                case {'entity_group': 'PER', 'word': word}:
-                    osoby.append(word)
-                case {'entity_group': 'LOC', 'word': word}:
-                    miejsca.append(word)
-                case {'entity_group': 'ORG', 'word': word}:
-                    organizacje.append(word)
-
-        return {"osoby": osoby, "miejsca": miejsca, "organizacje": organizacje}
-
-    def create_knowledge(self, knowledge_graph_list: list):
+    def create_knowledge_graph(self, ner_data):
         """Tworzy graf wiedzy na podstawie listy encji."""
-
-        
+        nodes_data = ner_data['all_canonical_entities']
+        edges_data = ner_data['co_occurrences']
+        entity_colors = {'PER': 'red', 'LOC': 'green', 'ORG': 'blue'}
         net = Network(
             height="750px",
             width="100%",
@@ -40,22 +20,14 @@ class KnowledgeGraphService:
             cdn_resources="remote"
         )
        
-        # Zbierz wszystkie encje (z duplikatami)
-        wszystkie_encje_z_duplikatami = []
-        for ent_list in knowledge_graph_list:
-            for ent in ent_list:
-                wszystkie_encje_z_duplikatami.append(ent['word'])
+        for entity_type, names_list in nodes_data.items():
+            for name in names_list:
+                net.add_node(name, color = entity_colors.get(entity_type))
         
-        # Utwórz węzły dla unikalnych encji
-        unikalne_encje = set(wszystkie_encje_z_duplikatami)
-        for ent in unikalne_encje:
-            net.add_node(ent)
-        
-        # Dodaj krawędzie między encjami występującymi w tym samym artykule
-        for ent_list in knowledge_graph_list:
-            nazwy_w_artykule = [ent['word'] for ent in ent_list]
-            for i, j in combinations(nazwy_w_artykule, 2):
+        for names_list in edges_data:
+            for i, j in combinations(names_list, 2):
                 net.add_edge(i, j)
+        
         net = net.generate_html()
-
+        
         return net

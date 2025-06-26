@@ -31,7 +31,7 @@ def index():
         ner_results = nlp_service.process_articles_ner(articles)
         sentiment_results = nlp_service.process_articles_sentiment(articles)
         sentiment_summary = nlp_service.create_sentiment_summary(sentiment_results)
-        graph_html = kg_service.create_knowledge(ner_results)
+        graph_html = kg_service.create_knowledge_graph(ner_results)
         
         return render_template('index.html', graph_html=graph_html, sentiment_summary=sentiment_summary)
         
